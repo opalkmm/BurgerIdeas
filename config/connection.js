@@ -1,20 +1,21 @@
-var mysql = require("mysql");
+// Dependencies
+var Sequelize = require("sequelize");
+require("dotenv").config();
+//process.env.DB_PASSWORD
 
-var connection = mysql.createConnection({
+
+// Creates mySQL connection using Sequelize
+var sequelize = new Sequelize("burgers_db", "root", process.env.DB_PASSWORD, {
   host: "localhost",
   port: 3306,
-  user: "root",
-  password: "535649",
-  database: "burgers_db"
-});
-
-
-connection.connect(function(err) {
-  if (err) {
-    console.error("error connecting: " + err.stack);
-    return;
+  dialect: "mysql",
+  pool: {
+    max: 5,
+    min: 0,
+    idle: 10000
   }
-  console.log("connected as id " + connection.threadId);
 });
 
-module.exports = connection;
+
+//export the connection
+module.exports = sequelize;

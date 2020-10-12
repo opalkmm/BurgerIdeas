@@ -1,41 +1,48 @@
+//dependencies
 var express = require("express");
-
 var router = express.Router();
 var burger = require("../models/burger.js");
-
-// get route -> index
+console.log(burger)
+//if '/' redirect to /burgers
 router.get("/", function(req, res) {
   res.redirect("/burgers");
 });
-
+//get all burger in DB
 router.get("/burgers", function(req, res) {
-  // express callback response by calling burger.selectAllBurger
-  burger.all(function(burgerData) {
-    // wrapper for orm.js that using MySQL query callback will return burger_data, render to index with handlebar
-    res.render("index", { burger_data: burgerData });
-  });
+  burger.Burger.findAll().then(function(result){
+    let burgerResult = {burger: result}
+    return res.render("index", burgerResult);
+  })
 });
 
-// post route -> back to index
+// post route , add burger idea to DB
 router.post("/burgers/create", function(req, res) {
-  // takes the request object using it as input for burger.addBurger
-  burger.create(req.body.burger_name, function(result) {
-    // wrapper for orm.js that using MySQL insert callback will return a log to console,
-    // render back to index with handle
-    console.log(result);
+ 
+  burger.Burger.create({
+    //burger_name - add input into column name in burgerdb
+    burger_name: req.body.burger_name
+  }).then(function(result){
+    //result callback
+    // console.log(result);
+    //reload the page
     res.redirect("/");
-  });
+  })
 });
 
-// put route -> back to index
+// PUT route to update the result of delete button (by id)
 router.put("/burgers/:id", function(req, res) {
-  burger.update(req.params.id, function(result) {
-    // wrapper for orm.js that using MySQL update callback will return a log to console,
-    // render back to index with handle
-    console.log(result);
-    // Send back response and let page reload from .then in Ajax
-    res.sendStatus(200);
-  });
+  //change devoured value to true 
+  //condition query
+  burger.Burger.update({
+    //not sure if 0/1 or T/F
+    devoured: true 
+  },{
+    where:{
+      id: req.params.id
+    }
+  }).then(function(result){
+    res.json("/")
+  })
 });
 
 module.exports = router;
