@@ -1,13 +1,15 @@
-{
+require('dotenv').config();
+
+module.exports ={
   "development": {
     "username": "root",
-    "password": "use_env_variable",
-    "database": "burger_sequelize_db",
+    "password": process.env.DB_PASSWORD,
+    "database": "burgers_db",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "production": {
     "use_env_variable": "JAWSDB_URL",
     "dialect": "mysql"
-  }
+  },
 }
