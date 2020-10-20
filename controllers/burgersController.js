@@ -11,7 +11,7 @@ router.get("/", function(req, res) {
 //get all burger in DB
 router.get("/burgers", function(req, res) {
   db.Burger.findAll().then(function(result){
-    let burgerResult = {burger: result}
+    let burgerResult = {burger_data: result}
     return res.render("index", burgerResult);
   })
 });

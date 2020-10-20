@@ -10,6 +10,6 @@ module.exports = function(Sequelize, DataTypes){
       type: DataTypes.BOOLEAN,
       defaultValue: false
     }
-  })
+  },{timestamps:false})
   return Burger
 }
