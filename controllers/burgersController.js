@@ -33,6 +33,7 @@ router.post("/burgers/create", function(req, res) {
 // PUT route to update the result of delete button (by id)
 router.put("/burgers/update/:id", function(req, res) {
   //change devoured value to true 
+  console.log(`Devoured ${req.params.id}`);
   //condition query
   db.Burger.update({
     //not sure if 0/1 or T/F
@@ -42,7 +43,7 @@ router.put("/burgers/update/:id", function(req, res) {
       id: req.params.id
     }
   }).then(function(result){
-    res.json("/")
+    res.json("/");
   })
 });
 

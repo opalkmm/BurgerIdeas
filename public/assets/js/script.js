@@ -7,11 +7,13 @@ $(document).ready(function() {
     console.log(burger_id);
     $.ajax({
       method: "PUT",
-      url: "/burgers/" + burger_id
+      url: "/burgers/update/" + burger_id
     }).then(function(data) {
       // reload page to display devoured burger in proper column
+      
       location.reload();
     });
 
   });
+  
 });
